@@ -39,16 +39,6 @@ A docker-compose file is provided in the root of this directory. Update your AWA
 docker compose up -d
 ```
 
-## Running via Kubernetes
-
-Kubernetes manifests are provided in the [`manifests`](kubernetes/manifests/) folder, update the `AWAIR_HOSTNAME` environmental variable in `deployment.yaml`, as well as `awair-exporter/device-name` (the ServiceMonitor will set this as an `awair_exporter_device_name` label on all metrics). From here:
-
-```
-kubectl apply -f manifests/
-```
-
-If you need to run multiple exporters, make sure you adjust the `metadata.name` and `metadata.labels.app.kubernetes.io/name` fields in each deployment to be unique. No changes need to be made to `service.yaml` or `servicemonitor.yaml` files, they will automatically pick up new deployments for monitoring.
-
 ## Example Metric Output
 
 ```bash

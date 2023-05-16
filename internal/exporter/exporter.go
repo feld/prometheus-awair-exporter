@@ -17,98 +17,126 @@ var (
 	score = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "score"),
 		"Awair Score (0-100)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	dew_point = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "dew_point"),
 		"The temperature at which water will condense and form into dew (ºC)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	temp = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "temp"),
 		"Dry bulb temperature (ºC)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	humidity = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "humidity"),
 		"Relative Humidity (%)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	abs_humidity = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "absolute_humidity"),
 		"Absolute Humidity (g/m³)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	co2 = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "co2"),
 		"Carbon Dioxide (ppm)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	co2_estimated = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "co2_est"),
 		"Estimated Carbon Dioxide (ppm - calculated by the TVOC sensor)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	co2_estimate_baseline = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "co2_est_baseline"),
 		"A unitless value that represents the baseline from which the TVOC sensor partially derives its estimated (e)CO₂output.",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	voc = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "voc"),
 		"Total Volatile Organic Compounds (ppb)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	voc_baseline = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "voc_baseline"),
 		"A unitless value that represents the baseline from which the TVOC sensor partially derives its TVOC output.",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	voc_h2_raw = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "voc_h2_raw"),
 		"A unitless value that represents the Hydrogen gas signal from which the TVOC sensor partially derives its TVOC output.",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	voc_ethanol_raw = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "voc_ethanol_raw"),
 		"A unitless value that represents the Ethanol gas signal from which the TVOC sensor partially derives its TVOC output.",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	pm25 = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "pm25"),
 		"Particulate matter less than 2.5 microns in diameter (µg/m³)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 
 	pm10 = prometheus.NewDesc(
 		prometheus.BuildFQName("awair", "", "pm10"),
 		"Estimated particulate matter less than 10 microns in diameter (µg/m³ - calculated by the PM2.5 sensor)",
-		nil,
+		[]string{
+			"device_uuid",
+		},
 		nil,
 	)
 	info = prometheus.NewDesc(
@@ -277,46 +305,46 @@ func (e *AwairExporter) Collect(ch chan<- prometheus.Metric) {
 	wg.Wait()
 
 	ch <- prometheus.MustNewConstMetric(
-		score, prometheus.GaugeValue, values.Score,
+		score, prometheus.GaugeValue, values.Score, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		dew_point, prometheus.GaugeValue, values.DewPoint,
+		dew_point, prometheus.GaugeValue, values.DewPoint, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		temp, prometheus.GaugeValue, values.Temp,
+		temp, prometheus.GaugeValue, values.Temp, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		humidity, prometheus.GaugeValue, values.Humidity,
+		humidity, prometheus.GaugeValue, values.Humidity, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		abs_humidity, prometheus.GaugeValue, values.AbsHumidity,
+		abs_humidity, prometheus.GaugeValue, values.AbsHumidity, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		co2, prometheus.GaugeValue, values.CO2,
+		co2, prometheus.GaugeValue, values.CO2, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		co2_estimated, prometheus.GaugeValue, values.CO2Est,
+		co2_estimated, prometheus.GaugeValue, values.CO2Est, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		co2_estimate_baseline, prometheus.GaugeValue, values.CO2EstBaseline,
+		co2_estimate_baseline, prometheus.GaugeValue, values.CO2EstBaseline, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		voc, prometheus.GaugeValue, values.Voc,
+		voc, prometheus.GaugeValue, values.Voc, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		voc_baseline, prometheus.GaugeValue, values.VocBaseline,
+		voc_baseline, prometheus.GaugeValue, values.VocBaseline, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		voc_h2_raw, prometheus.GaugeValue, values.VocH2Raw,
+		voc_h2_raw, prometheus.GaugeValue, values.VocH2Raw, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		voc_ethanol_raw, prometheus.GaugeValue, values.VocEthanolRaw,
+		voc_ethanol_raw, prometheus.GaugeValue, values.VocEthanolRaw, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		pm25, prometheus.GaugeValue, values.PM25,
+		pm25, prometheus.GaugeValue, values.PM25, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
-		pm10, prometheus.GaugeValue, values.PM10Est,
+		pm10, prometheus.GaugeValue, values.PM10Est, config.DeviceUUID,
 	)
 	ch <- prometheus.MustNewConstMetric(
 		info, prometheus.GaugeValue, 1,
